@@ -91,8 +91,6 @@ ENV/
 .spyderproject
 .spyproject
 
-*.js linguist-language=python
-
 # Rope project settings
 .ropeproject
 

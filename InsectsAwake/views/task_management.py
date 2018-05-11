@@ -16,6 +16,7 @@ tasks_db = db_name_conf()['tasks_db']
 asset_db = db_name_conf()['asset_db']
 server_db = db_name_conf()['server_db']
 subdomain_db = db_name_conf()['subdomain_db']
+plugin_db = db_name_conf()['plugin_db']
 
 
 @task_management.route('/task-management')
@@ -24,13 +25,13 @@ def tasks_list():
     # 删除任务
     if request.args.get('trash'):
         task_id = request.args.get('trash')
-        connectiondb('test_tasks').delete_one({'_id': ObjectId(task_id)})
+        connectiondb(tasks_db).delete_one({'_id': ObjectId(task_id)})
         return redirect(url_for('task_management.tasks_list'))
 
     # 任务重扫
     elif request.args.get('refresh'):
         task_id = request.args.get('refresh')
-        connectiondb('test_tasks').update_one({'_id': ObjectId(task_id)}, {'$set': {'task_status': 'Preparation'}})
+        connectiondb(tasks_db).update_one({'_id': ObjectId(task_id)}, {'$set': {'task_status': 'Preparation'}})
         return redirect(url_for('task_management.tasks_list'))
 
     # 任务编辑
@@ -44,7 +45,7 @@ def tasks_list():
         return jsonify(task_edit_data_json)
 
     # 默认返回任务列表
-    task_data = connectiondb('test_tasks').find().sort('end_date', -1)
+    task_data = connectiondb(tasks_db).find().sort('end_date', -1)
     return render_template('task-management.html', task_data=task_data)
 
 
@@ -73,7 +74,7 @@ def tasks_edit():
 @task_management.route('/create-tasks', methods=['POST', 'GET'])
 @login_check
 def create_tasks():
-    plugin = connectiondb('test_plugin_info').find()
+    plugin = connectiondb(plugin_db).find()
     return render_template('create-tasks.html', plugin=plugin)
 
 
@@ -164,7 +165,7 @@ def add_task():
             "task_status": "Preparation"
         }
         if task_data:
-            db_insert = connectiondb('test_tasks').insert_one(task_data).inserted_id
+            db_insert = connectiondb(tasks_db).insert_one(task_data).inserted_id
             if db_insert:
                 return 'success'
         else:

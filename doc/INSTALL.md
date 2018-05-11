@@ -50,6 +50,7 @@ sudo apt install nmap
 启动数据库
 
 ```bash
+mkdir -p  /data/db
 sudo service mongod start
 mongo --host 127.0.0.1:27017
 ```

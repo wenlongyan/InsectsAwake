@@ -1,4 +1,4 @@
-# 惊蛰
+# 惊蛰 （本项目不再维护，请关注[2.0](https://github.com/jeffzh3ng/Fuxi-Scanner)版）
 
 [![Travis](https://img.shields.io/badge/Python-2.6%7C2.7-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-GPLv2-red.svg)](https://github.com/jeffzh3ng/InsectsAwake/blob/master/LICENSE)
